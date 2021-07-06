@@ -15,12 +15,21 @@ namespace CustomControls
         public Point mousePoint;
         public ZohaButton():base()
         {
-            this.Size = new System.Drawing.Size(100,50);
+            this.Size = new System.Drawing.Size(150,100);
             this.Location = new System.Drawing.Point(0,0);
             this.BackColor = Color.Gray;
             base.Paint += ZohaButton_Paint;
             base.MouseClick += ZohaButton_MouseClick;
-            hitZone = new Rectangle(10,10,80,30);
+            hitZone = new Rectangle(this.Location.X+ this.Size.Width / 10, this.Location.Y+ this.Size.Height / 10, this.Width- this.Size.Width / 5, this.Height- this.Size.Height / 5);
+            this.SizeChanged += ZohaButton_SizeChanged;
+        }
+
+        private void ZohaButton_SizeChanged(object sender, EventArgs e)
+        {
+            if (Size.Height >= Size.Width || this.Size.Height<=30 || this.Size.Width<=30) {
+                this.Size = new System.Drawing.Size(150, 100);
+            }
+                hitZone = new Rectangle(this.Location.X + this.Size.Width/10, this.Location.Y + this.Size.Height / 10, this.Width - this.Size.Width / 5, this.Height - this.Size.Height / 5);
         }
 
         private void ZohaButton_MouseClick(object sender, MouseEventArgs e)
@@ -33,6 +42,9 @@ namespace CustomControls
         {
             var Graphics = this.CreateGraphics();
 
+            int height = this.hitZone.Height;
+            int width = height;
+
 
             Graphics.FillRectangle(Brushes.White,this.hitZone);
             if (new Rectangle(this.mousePoint, new Size(1, 1)).IntersectsWith(this.hitZone))
@@ -41,10 +53,10 @@ namespace CustomControls
             }
                 if (isChecked)
                 {
-                    Graphics.FillEllipse(Brushes.Green, new Rectangle(10, 10, 30, 30));
+                    Graphics.FillEllipse(Brushes.Green, new Rectangle(this.hitZone.X, hitZone.Y, width, height));
                 }
                 else {
-                    Graphics.FillEllipse(Brushes.Red, new Rectangle(60, 10, 30, 30));
+                    Graphics.FillEllipse(Brushes.Red, new Rectangle(this.hitZone.X+this.hitZone.Width-width, this.hitZone.Y, width, height));
                 }
 
         }

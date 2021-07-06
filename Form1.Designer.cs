@@ -32,8 +32,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "Form1";
+            ZohaButton zohaButton = new ZohaButton();
+            zohaButton.Size = new System.Drawing.Size(40,31);
 
-            this.Controls.Add(new ZohaButton());
+            this.Controls.Add(zohaButton);
         }
 
         #endregion
